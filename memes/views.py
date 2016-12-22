@@ -11,24 +11,20 @@ def index(request):
     response = IndexRenderer(memes).render()
     return HttpResponse(response) 
 
-def get_meme(request):    
+def get_meme(request):
     # Find a match
-    m = re.match("^\/(\S+)", request.path)
-    groups = m.groups()
-    if len(groups) == 1:
-        # Get the id of a meme
-        id = groups[0]
+    id = request.path.rsplit('/', 1)[-1]
 
-        # Load memes
-        baseDir = os.path.abspath(os.path.dirname(__file__))
-        memes = Memes.load(baseDir)
+    # Load memes
+    baseDir = os.path.abspath(os.path.dirname(__file__))
+    memes = Memes.load(baseDir)
 
-        for meme in memes:
-            if meme.id == id:
-                binary = file(meme.filepath, 'rb').read()
-                contentType = _get_meme_content_type(meme.filepath)
-                response = HttpResponse(binary, content_type=contentType)
-                return response 
+    for meme in memes:
+        if meme.id == id:
+            binary = file(meme.filepath, 'rb').read()
+            contentType = _get_meme_content_type(meme.filepath)
+            response = HttpResponse(binary, content_type=contentType)
+            return response 
 
     raise Http404
     
