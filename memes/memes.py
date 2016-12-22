@@ -6,9 +6,9 @@ import os
 
 class Meme(object):
 
-    def __init__(self, id, url, filepath):
+    def __init__(self, id, filename, filepath):
         self.id = id
-        self.url = url
+        self.filename = filename
         self.filepath = filepath
 
 class Memes(object):
@@ -27,10 +27,9 @@ class Memes(object):
             dotLocation = f.rfind('.')
 
             id = f[:dotLocation]
-            endpointUrl = id
             filepath = resourcesDir + '/' + f
 
-            meme = Meme(id, endpointUrl, filepath)
+            meme = Meme(id, f, filepath)
             memes.append(meme)
 
         return memes

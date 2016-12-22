@@ -41,6 +41,6 @@ class IndexRenderer(object):
     def _render_list(self):
         output = ''
         for meme in self.memes:
-            output += '<a href="{}">{}</a>'.format(meme.url, meme.id)
+            output += '<a href="{}">{}</a>'.format(meme.filename, meme.id)
 
         return output

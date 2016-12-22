@@ -13,16 +13,16 @@ def index(request):
 
 def get_meme(request):
     # Find a match
-    id = request.path.rsplit('/', 1)[-1]
+    filename = request.path.rsplit('/', 1)[-1]
 
     # Load memes
     baseDir = os.path.abspath(os.path.dirname(__file__))
     memes = Memes.load(baseDir)
 
     for meme in memes:
-        if meme.id == id:
+        if meme.filename == filename:
             binary = file(meme.filepath, 'rb').read()
-            contentType = _get_meme_content_type(meme.filepath)
+            contentType = _get_meme_content_type(filename)
             response = HttpResponse(binary, content_type=contentType)
             return response 
 
