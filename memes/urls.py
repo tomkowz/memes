@@ -18,6 +18,7 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
+    url(r'api/memes', views.api_get_memes, name='api_get_memes'),
     url(r'^$', views.index, name='index'),
-    url(r'\S+', views.get_meme, name='get_meme'),
+    url(r'\S+', views.get_meme, name='get_meme')
 ]

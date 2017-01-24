@@ -11,6 +11,9 @@ class Meme(object):
         self.filename = filename
         self.filepath = filepath
 
+    def toJSON(self):
+        return {"id": self.id, "filename": self.filename, "filepath": self.filepath}
+
 class Memes(object):
 
     @staticmethod

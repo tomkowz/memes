@@ -2,6 +2,7 @@ from django.http import HttpResponse, Http404
 from index_renderer import IndexRenderer
 from memes import Memes, Meme
 
+import json
 import os.path
 import re
 
@@ -27,6 +28,21 @@ def get_meme(request):
             return response 
 
     raise Http404
+
+def api_get_memes(request):
+    baseDir = os.path.abspath(os.path.dirname(__file__))
+    memes = Memes.load(baseDir)
+    
+    jsonMemes = []
+    for meme in memes:
+        memeJSON = meme.toJSON()
+        del memeJSON["id"]
+        del memeJSON["filepath"]
+        jsonMemes.append(memeJSON)
+
+    response = {"memes": jsonMemes}
+
+    return HttpResponse(json.dumps(response), content_type="application/json")
     
 def _get_meme_content_type(filename):
     contentTypes = {
